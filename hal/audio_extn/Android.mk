@@ -607,11 +607,9 @@ LOCAL_CFLAGS += \
     -Wall \
     -Werror \
     -Wno-unused-function \
-    -Wno-unused-variable \
-    -DDTSHD_PARSER_ENABLED
+    -Wno-unused-variable
 
 LOCAL_SHARED_LIBRARIES := \
-    libaudioparsers \
     libaudioroute \
     libaudioutils \
     libcutils \
@@ -620,6 +618,11 @@ LOCAL_SHARED_LIBRARIES := \
     liblog \
     libtinyalsa \
     libtinycompress
+
+ifeq ($(TARGET_COMPILE_WITH_PROPRIETARY_PARSERS),true)
+LOCAL_CFLAGS += -DDTSHD_PARSER_ENABLED
+LOCAL_SHARED_LIBRARIES += libaudioparsers
+endif
 
 LOCAL_C_INCLUDES := \
     $(PRIMARY_HAL_PATH) \
